@@ -1,0 +1,60 @@
+graph TB
+    %% Stakeholders
+    FA[👨‍🌾 Farmers & Advisors]
+    LA[🗺️ Land App System]
+    FC[🌲 Forestry Commission GMS]
+    DEFRA[🏛️ Defra]
+    HMTREAS[💰 HM Treasury]
+
+    %% Core System Components
+    subgraph "Land App Ecosystem"
+        LAAPI[Land App API]
+        LAGEO[GeoJSON Data]
+        LAASSESS[Site Assessment Tools]
+    end
+
+    subgraph "Forestry Commission GMS"
+        DASH[Dashboard]
+        APPLIST[Applications List]
+        APPDETAIL[Application Detail]
+        MAPVIEW[Map View]
+        SYSDIAG[System Diagram]
+        HELP[Help & Guidance]
+        AIASSIST[AI Assistant]
+    end
+
+    subgraph "Government Integration"
+        DEFRAAPI[Defra Data Hub]
+        OSCAR[Treasury OSCAR]
+        AUDIT[Audit Trail System]
+    end
+
+    %% Data Flow
+    FA --> LAASSESS
+    LAASSESS --> LAGEO
+    LAGEO --> LAAPI
+    LAAPI --> FC
+    
+    FC --> DASH
+    FC --> APPLIST
+    FC --> APPDETAIL
+    FC --> MAPVIEW
+    FC --> SYSDIAG
+    FC --> HELP
+    HELP --> AIASSIST
+    
+    FC --> DEFRAAPI
+    FC --> OSCAR
+    FC --> AUDIT
+    
+    DEFRAAPI --> DEFRA
+    OSCAR --> HMTREAS
+
+    %% Styling
+    classDef stakeholder fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef system fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef integration fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    
+    class FA,DEFRA,HMTREAS stakeholder
+    class LA,FC system
+    class DEFRAAPI,OSCAR,AUDIT integration

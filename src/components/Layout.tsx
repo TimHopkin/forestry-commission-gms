@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Trees, FileText, Calculator, Home, Map, Network } from 'lucide-react'
+import { Trees, FileText, Home, Map, Network, HelpCircle } from 'lucide-react'
 
 interface LayoutProps {
   children: ReactNode
@@ -14,7 +14,7 @@ export default function Layout({ children }: LayoutProps) {
     { name: 'Applications', href: '/applications', icon: FileText },
     { name: 'Map View', href: '/applications-map', icon: Map },
     { name: 'System Overview', href: '/system-diagram', icon: Network },
-    { name: 'Payment Calculator', href: '/calculator', icon: Calculator },
+    { name: 'Help & Guidance', href: '/help', icon: HelpCircle },
   ]
 
   return (

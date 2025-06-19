@@ -1,7 +1,7 @@
 {
   "name": "forestry-commission-gms",
   "version": "1.0.0",
-  "description": "Forestry Commission England Woodland Creation Offer (EWCO) Grant Management System",
+  "description": "Forestry Commission England Woodland Creation Offer (EWCO) Grant Management System - Comprehensive digital platform for managing woodland creation grants with Land App integration",
   "private": true,
   "type": "module",
   "scripts": {

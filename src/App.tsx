@@ -6,7 +6,7 @@ import ApplicationsList from './pages/ApplicationsList'
 import ApplicationDetail from './pages/ApplicationDetail'
 import ApplicationsMapView from './pages/ApplicationsMapView'
 import SystemDiagram from './pages/SystemDiagram'
-import PaymentCalculator from './pages/PaymentCalculator'
+import HelpGuidance from './pages/HelpGuidance'
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Route path="/applications/:id" element={<ApplicationDetail />} />
         <Route path="/applications-map" element={<ApplicationsMapView />} />
         <Route path="/system-diagram" element={<SystemDiagram />} />
-        <Route path="/calculator" element={<PaymentCalculator />} />
+        <Route path="/help" element={<HelpGuidance />} />
       </Routes>
     </Layout>
   )
