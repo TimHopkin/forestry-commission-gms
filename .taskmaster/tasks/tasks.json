@@ -1,0 +1,331 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Set Up Taskmaster AI in Cursor",
+        "description": "Install and configure Taskmaster AI to work with Cursor as an MCP server, including setting up necessary API keys and initializing the system.",
+        "details": "1. Install Taskmaster AI either globally or locally:\n```bash\nnpm install -g task-master-ai\n# or\nnpm install task-master-ai\n```\n2. Configure Taskmaster AI as an MCP server in Cursor:\n   - Open Cursor Settings (Ctrl+Shift+J)\n   - Navigate to the MCP tab\n   - Add the following configuration:\n```json\n{\n  \"servers\": {\n    \"taskmaster-ai\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"--package=task-master-ai\", \"task-master-ai\"],\n      \"env\": {\n        \"ANTHROPIC_API_KEY\": \"your_anthropic_api_key\",\n        \"PERPLEXITY_API_KEY\": \"your_perplexity_api_key\",\n        \"XAI_API_KEY\": \"your_xai_api_key\"\n      },\n      \"type\": \"stdio\"\n    }\n  }\n}\n```\n3. Obtain API keys from Anthropic, Perplexity, and xAI\n4. Initialize Taskmaster AI:\n```bash\ntask-master init\n```\n5. Create a directory structure for PRDs and tasks:\n```bash\nmkdir -p .taskmaster/docs\n```",
+        "testStrategy": "Verify installation by running `task-master --version` to confirm successful installation. Test MCP server configuration by checking Cursor logs for successful connection. Validate initialization by confirming the creation of the .taskmaster directory and its subdirectories.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Integrate Claude Code with Cursor",
+        "description": "Install and configure Claude Code in Cursor to enable AI-powered code generation, review, and debugging capabilities.",
+        "details": "1. Install Claude Code in Cursor via its VS Code extension or CLI\n2. Configure Claude Code to work with your project:\n```bash\nclaude -p \"Analyze codebase and suggest improvements\"\n```\n3. Set up Claude Code's background tasks for automated bug detection\n4. Configure Claude Code for intelligent code reviews:\n   - In Cursor's Agent Mode (Ctrl+I), create a prompt template: \"Review my code for potential bugs.\"\n5. Ensure Claude Code has access to your codebase by setting appropriate permissions\n6. Test Claude Code's ability to generate code fixes by prompting it with a simple bug scenario",
+        "testStrategy": "Verify Claude Code installation by checking for its presence in Cursor's extensions. Test code analysis functionality by running a sample analysis on a test file. Validate code review capabilities by submitting a code snippet with intentional bugs and checking if Claude Code identifies them correctly.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Set Up Automated Testing with ACCELQ",
+        "description": "Configure ACCELQ for automated testing of the codebase, including setting up webhooks to notify Taskmaster AI of test failures.",
+        "details": "1. Sign up for an ACCELQ account at https://www.accelq.com\n2. Set up a new project in ACCELQ for your codebase\n3. Configure ACCELQ for your specific testing needs (web, mobile, API)\n4. Create test suites for unit, integration, and UI tests\n5. Set up webhooks in ACCELQ to notify Taskmaster AI of test failures:\n```json\n{\n  \"url\": \"http://your-taskmaster-mcp-server/webhook\",\n  \"events\": [\"test.failed\"],\n  \"payload\": {\n    \"command\": \"task-master create\",\n    \"args\": {\n      \"prompt\": \"Fix failing test: {{test.description}}\"\n    }\n  }\n}\n```\n6. Configure ACCELQ to run tests automatically on code changes or on a schedule",
+        "testStrategy": "Verify ACCELQ setup by running a sample test suite. Test webhook configuration by intentionally failing a test and confirming that a task is created in Taskmaster AI. Validate automated test execution by making a code change and checking if tests run automatically.",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Configure GitHub Issues and Actions for Bug Tracking",
+        "description": "Set up GitHub Issues for bug tracking and configure GitHub Actions to monitor test failures and create tasks in Taskmaster AI.",
+        "details": "1. Set up GitHub Issues for your repository\n2. Create a GitHub Action workflow file at `.github/workflows/bug-detection.yml`:\n```yaml\nname: Bug Detection\non: [push]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - name: Run Tests\n        run: npm test\n      - name: Create Bug Task\n        if: failure()\n        run: |\n          curl -X POST -H \"Authorization: Bearer ${{ secrets.TASKMASTER_API_TOKEN }}\" \\\n          -d '{\"prompt\":\"Fix failing test: ${{ github.event.head_commit.message }}\"}' \\\n          http://your-taskmaster-mcp-server/task-master/create\n```\n3. Create a TASKMASTER_API_TOKEN secret in your GitHub repository settings\n4. Integrate Claude Code with GitHub:\n   - Install the Claude Code GitHub App\n   - Configure it to respond to issues or PRs\n5. Set up issue templates for bug reports in `.github/ISSUE_TEMPLATE/bug_report.md`",
+        "testStrategy": "Test GitHub Actions workflow by pushing a commit with a failing test. Verify that an issue is created and a task is generated in Taskmaster AI. Test Claude Code GitHub integration by creating a test issue and checking if Claude Code responds appropriately.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Enable Cursor Bugbot (Optional)",
+        "description": "Set up Cursor Bugbot to catch bugs missed by Claude Code and create tasks in Taskmaster AI.",
+        "details": "1. Access Cursor's web settings\n2. Enable Bugbot feature\n3. Link your GitHub account to Bugbot\n4. Configure Bugbot to work with your project:\n   - Set up notification preferences\n   - Configure bug detection sensitivity\n   - Set up integration with Taskmaster AI\n5. Test Bugbot by introducing a subtle bug that might be missed by standard linting",
+        "testStrategy": "Verify Bugbot activation by checking Cursor settings. Test bug detection by introducing a subtle logic error in code and confirming Bugbot identifies it. Validate integration with Taskmaster AI by checking if detected bugs create tasks automatically.",
+        "priority": "low",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Create Real-Time Bug Tracking Workflow",
+        "description": "Establish a comprehensive workflow that combines all tools for real-time bug tracking, from code writing to bug detection and resolution.",
+        "details": "1. Document the complete workflow for real-time bug tracking:\n   - Code in Cursor using Claude Code's suggestions\n   - Run tests via ACCELQ\n   - Detect bugs through test failures\n   - Create tasks in Taskmaster AI\n   - Fix bugs with Claude Code assistance\n   - Review and verify fixes\n   - Update task status\n2. Create script to automate parts of the workflow:\n```bash\n#!/bin/bash\n# run-tests-and-track-bugs.sh\n\n# Run tests\nnpm test\n\n# If tests fail, create a task\nif [ $? -ne 0 ]; then\n  task-master create --prompt=\"Fix failing tests in latest commit\"\nfi\n```\n3. Set up pre-commit hooks to run linters and basic tests before allowing commits",
+        "testStrategy": "Test the workflow by simulating a complete cycle: write code, introduce a bug, detect it through testing, create a task, fix the bug, and verify the fix. Validate the automation script by running it with both passing and failing tests to ensure it behaves correctly in both scenarios.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Implement Code Quality Standards",
+        "description": "Define and implement code quality standards to ensure clean, reliable, and scalable code throughout the development process.",
+        "details": "1. Create a `.cursor/rules` directory to define coding standards:\n```bash\nmkdir -p .cursor/rules\n```\n2. Define coding standards in `.cursor/rules/standards.json`:\n```json\n{\n  \"rules\": [\n    {\n      \"name\": \"function-length\",\n      \"description\": \"Functions should not exceed 30 lines\",\n      \"pattern\": \"function [a-zA-Z0-9_]+\\\\s*\\\\([^)]*\\\\)\\\\s*\\\\{([^}]*\\\\n){30,}\\\\}\",\n      \"severity\": \"warning\"\n    },\n    {\n      \"name\": \"error-handling\",\n      \"description\": \"All async functions should have try-catch blocks\",\n      \"pattern\": \"async function [a-zA-Z0-9_]+\\\\s*\\\\([^)]*\\\\)\\\\s*\\\\{(?!.*try).*\\\\}\",\n      \"severity\": \"error\"\n    }\n  ]\n}\n```\n3. Configure ESLint and Prettier for code formatting and linting\n4. Set up a script to analyze code complexity:\n```bash\ntask-master analyze-complexity --directory=src\n```\n5. Create documentation on best practices for error handling, modularity, and scalability",
+        "testStrategy": "Test code quality rules by writing code that violates the rules and checking if warnings/errors are generated. Validate complexity analysis by running it on existing code and verifying the results. Test integration with the bug tracking workflow by ensuring quality issues are detected and tasks are created.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Task Management Commands for Bug Fixes",
+        "description": "Create custom Taskmaster AI commands for managing bug-related tasks, including creation, assignment, and completion.",
+        "details": "1. Create custom commands for bug-related tasks in Taskmaster AI:\n```bash\n# Create a bug fix task\ntask-master create-bug --description=\"Description of the bug\" --severity=\"high|medium|low\" --component=\"component-name\"\n\n# Assign a bug fix task\ntask-master assign --id=<task_id> --assignee=\"developer-name\"\n\n# Complete a bug fix task\ntask-master complete --id=<task_id> --resolution=\"fixed|wontfix|duplicate\"\n\n# Track bug metrics\ntask-master bug-metrics --timeframe=\"day|week|month\"\n```\n2. Implement these commands by extending Taskmaster AI's functionality\n3. Create templates for bug fix tasks that include reproduction steps, expected behavior, and actual behavior\n4. Set up a dashboard for tracking bug metrics and resolution times",
+        "testStrategy": "Test each custom command with various inputs to ensure they work correctly. Validate task creation by checking if tasks appear in the task list. Test metrics tracking by creating and resolving several bug tasks and then running the metrics command to verify the results.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Integrate Real-Time Notifications",
+        "description": "Set up a notification system to alert developers of new bugs, failing tests, and tasks that need attention.",
+        "details": "1. Set up notification channels:\n   - Email notifications for critical bugs\n   - Slack/Discord integration for team notifications\n   - Desktop notifications for local development\n2. Configure notification rules:\n```json\n{\n  \"notifications\": [\n    {\n      \"event\": \"test.failed\",\n      \"channels\": [\"slack\", \"desktop\"],\n      \"priority\": \"high\"\n    },\n    {\n      \"event\": \"bug.created\",\n      \"channels\": [\"slack\", \"email\"],\n      \"priority\": \"medium\"\n    },\n    {\n      \"event\": \"task.assigned\",\n      \"channels\": [\"slack\", \"desktop\"],\n      \"priority\": \"low\"\n    }\n  ]\n}\n```\n3. Implement a notification service that listens for events from ACCELQ, GitHub, and Taskmaster AI\n4. Create custom notification templates for different event types",
+        "testStrategy": "Test notification system by triggering each event type and verifying that notifications are sent through the configured channels. Validate priority-based filtering by setting different priorities and checking if notifications are filtered correctly. Test integration with the overall workflow by simulating a complete bug detection and resolution cycle.",
+        "priority": "low",
+        "dependencies": [
+          3,
+          4,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Implement Automated Bug Classification",
+        "description": "Create a system to automatically classify bugs based on their type, severity, and affected components.",
+        "details": "1. Define bug classification criteria:\n   - Type: Functional, UI/UX, Performance, Security\n   - Severity: Critical, High, Medium, Low\n   - Component: Based on project structure\n2. Implement classification logic:\n```javascript\nfunction classifyBug(bugDescription, testOutput) {\n  // Analyze bug description and test output\n  const type = determineBugType(bugDescription, testOutput);\n  const severity = determineSeverity(bugDescription, testOutput);\n  const component = determineComponent(bugDescription, testOutput);\n  \n  return { type, severity, component };\n}\n\nfunction determineBugType(description, output) {\n  if (output.includes('security') || description.includes('vulnerability')) {\n    return 'Security';\n  }\n  if (output.includes('slow') || output.includes('timeout')) {\n    return 'Performance';\n  }\n  // More classification logic\n}\n```\n3. Integrate classification with task creation:\n```bash\ntask-master create --prompt=\"Fix bug: ${description}\" --metadata='{\"type\":\"${type}\",\"severity\":\"${severity}\",\"component\":\"${component}\"}'\n```\n4. Create dashboards for visualizing bug distribution by type, severity, and component",
+        "testStrategy": "Test classification logic with various bug descriptions and test outputs to ensure correct classification. Validate integration with task creation by creating bugs with different characteristics and checking if they are classified correctly. Test dashboard visualization by creating a set of classified bugs and verifying the dashboard displays accurate statistics.",
+        "priority": "low",
+        "dependencies": [
+          4,
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Implement Regression Testing Automation",
+        "description": "Set up automated regression testing to ensure that bug fixes don't introduce new issues or reintroduce old ones.",
+        "details": "1. Configure ACCELQ to maintain a regression test suite:\n   - Automatically add tests for fixed bugs\n   - Run regression tests after each bug fix\n   - Track test coverage for bug-prone areas\n2. Implement a script to create regression tests from bug reports:\n```javascript\nfunction createRegressionTest(bugDescription, fixCommit) {\n  // Extract steps to reproduce from bug description\n  const steps = extractReproductionSteps(bugDescription);\n  \n  // Create a test case that follows these steps\n  const testCase = generateTestCase(steps);\n  \n  // Add assertions based on the fix\n  const assertions = generateAssertions(fixCommit);\n  \n  return { testCase, assertions };\n}\n```\n3. Set up a workflow to run regression tests before merging bug fix PRs:\n```yaml\nname: Regression Tests\non:\n  pull_request:\n    types: [opened, synchronize]\n    branches: [main]\njobs:\n  regression:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      - name: Run Regression Tests\n        run: npm run test:regression\n```",
+        "testStrategy": "Test regression test creation by providing sample bug descriptions and fix commits, then verifying the generated tests. Validate the regression testing workflow by creating a PR with a bug fix and checking if regression tests run automatically. Test integration with the overall bug tracking system by fixing a bug, creating a regression test, and then intentionally reintroducing the bug to see if it's caught.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Create Documentation and Training Materials",
+        "description": "Develop comprehensive documentation and training materials for the real-time bug tracking system.",
+        "details": "1. Create user documentation:\n   - System overview and architecture\n   - Setup and configuration guide\n   - Workflow documentation\n   - Troubleshooting guide\n2. Develop training materials:\n   - Quick start guide\n   - Video tutorials for common workflows\n   - Interactive examples\n3. Set up a knowledge base for common issues and solutions\n4. Create API documentation for custom commands and integrations\n5. Implement a feedback mechanism for improving documentation:\n```html\n<div class=\"feedback-form\">\n  <h3>Was this documentation helpful?</h3>\n  <button onclick=\"sendFeedback('yes')\">Yes</button>\n  <button onclick=\"sendFeedback('no')\">No</button>\n  <textarea id=\"feedback-text\" placeholder=\"Additional feedback...\"></textarea>\n  <button onclick=\"sendDetailedFeedback()\">Submit</button>\n</div>\n```",
+        "testStrategy": "Review documentation for accuracy and completeness. Test training materials by having new users follow them and providing feedback. Validate the feedback mechanism by submitting various types of feedback and checking if they are properly recorded. Test knowledge base by searching for common issues and verifying that relevant solutions are provided.",
+        "priority": "low",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-19T19:55:17.877Z",
+      "updated": "2025-06-19T19:56:24.561Z",
+      "description": "Tasks for master context"
+    }
+  },
+  "forestry-gms": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Build Core EWCO Grant Application System",
+        "description": "Create digital forms engine with dynamic forms that adapt based on land sensitivity mapping, woodland type selection, and Environmental Impact Assessment requirements",
+        "details": "1. Design and implement dynamic forms engine\n2. Create context-aware forms that adapt to:\n   - Land sensitivity mapping (high/low sensitivity areas)\n   - Woodland type and species selection\n   - Environmental Impact Assessment requirements\n3. Integrate with Land App EWCO Checker Tool for auto-population\n4. Implement secure document upload and version control for:\n   - Woodland Creation Plans (WCP 1-5)\n   - Maps and boundary files\n   - Environmental surveys and assessments\n5. Build validation and compliance checking features",
+        "testStrategy": "Test form adaptation with different land types and sensitivity levels. Validate auto-population from Land App integration. Test document upload and version control with various file types and sizes.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement Automated Payment Calculation System",
+        "description": "Build automated grant payment calculation including standard capital costs, annual maintenance, additional contributions, and premium payments",
+        "details": "1. Implement payment calculation engine for:\n   - Standard capital costs (up to £10,200/ha)\n   - Annual maintenance payments (£400/ha for 15 years)\n   - Additional contributions (up to £12,700/ha for public benefits)\n   - Low sensitivity land payment (£1,100/ha)\n   - Nature Recovery premium payment (£3,300/ha)\n2. Create validation rules and business logic\n3. Integrate with contract management system\n4. Build payment scheduling and milestone tracking\n5. Generate payment summaries and forecasts",
+        "testStrategy": "Test calculation accuracy with various land sizes and payment combinations. Validate business rules and edge cases. Test integration with contract management and payment systems.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Build Multi-Agency Workflow System",
+        "description": "Implement collaborative workflow system for Forestry Commission, Natural England, and Environment Agency with parallel processing for Fast Track applications",
+        "details": "1. Design multi-agency workflow architecture\n2. Implement parallel processing workflows for different approval stages\n3. Create Fast Track processing pathway (12-week target)\n4. Build real-time status updates and notifications\n5. Implement stakeholder communication hub\n6. Create automated screening for:\n   - Environmental Impact Assessment automation\n   - UK Forestry Standard compliance checking\n   - Risk assessment scoring\n7. Build decision tracking and audit trails",
+        "testStrategy": "Test workflow with multiple agencies and parallel processes. Validate Fast Track processing times. Test notification and communication systems across different user roles.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Build Mobile Field Monitoring App",
+        "description": "Create mobile application for field officers with GPS verification, digital photography, compliance checklists, and real-time reporting",
+        "details": "1. Develop mobile app with offline capability\n2. Implement GPS-enabled location verification\n3. Add digital photography with automatic geotagging\n4. Create compliance checklist automation\n5. Build real-time report generation\n6. Integrate with main grant management system\n7. Add synchronization for offline/online data\n8. Implement user authentication and role-based access",
+        "testStrategy": "Test GPS accuracy and location verification. Validate photo geotagging and offline functionality. Test compliance checklist workflows and real-time sync with main system.",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Implement Contract Management System",
+        "description": "Build digital contract generation, execution, and monitoring system with automated milestone tracking",
+        "details": "1. Create digital contract generation from application data\n2. Implement electronic contract execution\n3. Build automated milestone tracking and payment triggers\n4. Create 5-year durability period monitoring\n5. Integrate with RPA payment systems\n6. Build contract amendment and variation workflows\n7. Implement compliance monitoring and reporting",
+        "testStrategy": "Test contract generation with various application types. Validate milestone tracking and automated payment triggers. Test integration with RPA systems and compliance monitoring.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Build Analytics and Reporting Dashboard",
+        "description": "Create comprehensive dashboard for real-time processing metrics, carbon tracking, biodiversity measurement, and financial analytics",
+        "details": "1. Design real-time dashboard for application processing metrics\n2. Implement carbon sequestration tracking and reporting\n3. Build biodiversity impact measurement tools\n4. Create financial performance analytics\n5. Add customizable reporting features\n6. Implement data visualization and charts\n7. Build export capabilities for various formats\n8. Create automated report generation and scheduling",
+        "testStrategy": "Test dashboard with real-time data updates. Validate carbon and biodiversity tracking accuracy. Test report generation and export functionality across different formats.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Implement Blended Finance Management",
+        "description": "Build multi-scheme management capability and private sector integration for blended finance opportunities",
+        "details": "1. Create template-based scheme creation for new funding programs\n2. Implement configurable eligibility criteria and payment structures\n3. Build multi-funding source tracking (public, private, philanthropic)\n4. Create cross-scheme compatibility checking to prevent double funding\n5. Build private sector portal for corporate ESG investment\n6. Implement impact measurement and verification tools\n7. Create investor progress monitoring dashboard\n8. Build ROI calculation and reporting features",
+        "testStrategy": "Test multi-scheme configuration and eligibility checking. Validate cross-scheme compatibility and double funding prevention. Test private sector portal and investor monitoring features.",
+        "priority": "low",
+        "dependencies": [
+          2,
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Build Integration Framework",
+        "description": "Implement integrations with existing government systems and external services",
+        "details": "1. Build Land App EWCO Checker Tool integration\n2. Integrate with Forestry Commission Map Browser\n3. Connect to Rural Payments Agency systems\n4. Implement GOV.UK services integration\n5. Build Natural England systems connection\n6. Integrate with Environment Agency databases\n7. Create API framework for third-party integrations\n8. Implement data standards and interoperability features",
+        "testStrategy": "Test each integration individually and in combination. Validate data flow and transformation between systems. Test API framework with various third-party scenarios.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Implement Security and Compliance Framework",
+        "description": "Build comprehensive security, compliance, and access control system meeting government standards",
+        "details": "1. Implement Government Security Classifications (GSC) compliance\n2. Build Data Protection Act 2018 and GDPR compliance features\n3. Integrate with GOV.UK Verify and One Login for Government\n4. Create role-based access control with audit trails\n5. Implement encryption for data at rest and in transit\n6. Build automated backup and disaster recovery\n7. Create security monitoring and alerting\n8. Implement compliance reporting and auditing tools",
+        "testStrategy": "Test security controls and access restrictions. Validate compliance with government standards. Test backup/recovery procedures and security monitoring alerts.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Build Testing and Quality Assurance Framework",
+        "description": "Implement comprehensive testing framework with automated testing, bug tracking, and quality monitoring",
+        "details": "1. Set up automated testing pipeline with 90%+ code coverage\n2. Implement unit, integration, and performance testing\n3. Build security testing including penetration testing\n4. Create user acceptance testing framework\n5. Implement Task Master AI integration for bug tracking\n6. Build continuous integration and deployment pipelines\n7. Create quality monitoring and reporting tools\n8. Implement automated code review and analysis",
+        "testStrategy": "Test automated testing pipeline with various scenarios. Validate bug tracking integration with Task Master AI. Test CI/CD pipeline and quality monitoring tools.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-19T20:01:54.630Z",
+      "updated": "2025-06-19T20:05:47.748Z",
+      "description": "Forestry Commission Grant Management System tasks"
+    }
+  }
+}

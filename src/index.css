@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 font-govuk;
+  }
+  
+  /* GOV.UK Design System base styles */
+  h1 {
+    @apply text-3xl font-bold text-gray-900 mb-6;
+  }
+  
+  h2 {
+    @apply text-2xl font-semibold text-gray-900 mb-4;
+  }
+  
+  h3 {
+    @apply text-xl font-medium text-gray-900 mb-3;
+  }
+  
+  p {
+    @apply text-gray-700 mb-4 leading-relaxed;
+  }
+  
+  .govuk-button {
+    @apply bg-govuk-blue text-white px-6 py-3 rounded font-medium hover:bg-blue-700 focus:ring-2 focus:ring-govuk-blue focus:ring-offset-2 transition-colors;
+  }
+  
+  .govuk-button--secondary {
+    @apply bg-gray-200 text-gray-900 hover:bg-gray-300;
+  }
+  
+  .govuk-button--warning {
+    @apply bg-govuk-red hover:bg-red-700;
+  }
+  
+  .govuk-input {
+    @apply border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-govuk-blue focus:border-govuk-blue;
+  }
+  
+  .govuk-label {
+    @apply block text-gray-900 font-medium mb-2;
+  }
+  
+  .govuk-hint {
+    @apply text-gray-600 text-sm mb-2;
+  }
+  
+  .govuk-error-message {
+    @apply text-govuk-red font-medium text-sm;
+  }
+}
+
+/* Leaflet Map Styles */
+.land-app-popup .leaflet-popup-content-wrapper {
+  @apply rounded-lg shadow-lg;
+}
+
+.land-app-popup .leaflet-popup-content {
+  @apply m-0 font-govuk;
+}
+
+.land-app-popup .leaflet-popup-tip {
+  @apply bg-white;
+}
+
+/* Leaflet control styles */
+.leaflet-control-layers {
+  @apply rounded-lg shadow-lg border border-gray-200;
+}
+
+.leaflet-control-zoom {
+  @apply rounded-lg shadow-lg border border-gray-200;
+}
+
+.leaflet-control-zoom a {
+  @apply text-gray-700 border-gray-200;
+}
+
+.leaflet-control-zoom a:hover {
+  @apply bg-gray-50;
+}

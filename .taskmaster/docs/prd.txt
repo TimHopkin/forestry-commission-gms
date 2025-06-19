@@ -1,0 +1,146 @@
+To implement real-time automated bug tracking while coding in Cursor with Claude Code, complemented by Taskmaster AI, you need to integrate tools and workflows that monitor code changes, run tests, detect issues, and create tasks for bug fixes dynamically. While Taskmaster AI and Claude Code excel at task management and code generation, they don’t natively provide real-time bug tracking. However, you can combine them with other tools to achieve this. Below, I outline a practical approach, including setup steps, tools, and a specific workflow to enable real-time bug tracking, ensuring a stable, scalable, and high-quality codebase.
+
+### Approach to Real-Time Automated Bug Tracking
+Real-time bug tracking involves:
+- **Monitoring Code Changes**: Detect errors as you code or commit changes.
+- **Automated Testing**: Run unit tests, integration tests, or linters to catch bugs early.
+- **Task Creation**: Automatically generate tasks in Taskmaster AI for identified bugs.
+- **Integration with Cursor**: Leverage Cursor’s Agent Mode and Claude Code for seamless code suggestions and fixes.
+- **Feedback Loop**: Continuously update tasks and verify fixes to maintain platform performance.
+
+### Tools to Complement Taskmaster AI and Claude Code
+Based on the provided context and general knowledge, here are the recommended tools and their links to set up real-time bug tracking:
+1. **Taskmaster AI**: Manages tasks and integrates with Cursor for structured workflows.
+   - **Link**: [Taskmaster AI GitHub](https://github.com/eyaltoledano/claude-task-master)[](https://github.com/eyaltoledano/claude-task-master)
+   - Purpose: Parse PRDs, generate tasks, and manage bug-fix tasks.
+2. **Claude Code**: Anthropic’s AI coding assistant for generating, reviewing, and debugging code.
+   - **Link**: [Claude Code by Anthropic](https://www.anthropic.com)[](https://www.anthropic.com/news/claude-4)
+   - Purpose: Generate code, suggest fixes, and perform intelligent code reviews.
+3. **Cursor**: AI-powered IDE with Claude integration for real-time coding assistance.
+   - **Link**: [Cursor Official Site](https://cursor.com)[](https://www.haihai.ai/cursor-vs-claude-code/)
+   - Purpose: Host Taskmaster AI and Claude Code, execute tasks, and apply fixes.
+4. **GitHub Issues with Actions**: Tracks bugs and automates workflows via GitHub Actions.
+   - **Link**: [GitHub Issues](https://docs.github.com/en/issues)[](https://www.accelq.com/blog/bug-tracking-tools/)
+   - Purpose: Log bugs, automate task creation, and integrate with Claude Code for issue resolution.
+5. **ACCELQ**: AI-based testing platform for automated testing across web, mobile, and APIs.
+   - **Link**: [ACCELQ](https://www.accelq.com)[](https://www.accelq.com/blog/bug-tracking-tools/)
+   - Purpose: Run codeless automated tests to detect bugs in real time.
+6. **Cursor Bugbot (Optional)**: A new feature for catching bugs missed by Claude Code.
+   - **Link**: Enable in Cursor settings (no direct link; see X post)[](https://x.com/AFPayne/status/1934202327092908220)
+   - Purpose: Automatically detect bugs during coding with a 7-day free trial.
+
+### Step-by-Step Setup for Real-Time Bug Tracking
+Here’s how to combine these tools for real-time bug tracking in Cursor:
+
+1. **Set Up Taskmaster AI in Cursor**
+   - Install Taskmaster AI globally or locally:
+     ```bash
+     npm install -g task-master-ai
+     ```
+     or
+     ```bash
+     npm install task-master-ai
+     ```
+   - Configure Taskmaster AI as an MCP server in Cursor:
+     - Open Cursor Settings (`Ctrl+Shift+J`), go to the MCP tab, and add:
+       ```json
+       {
+         "servers": {
+           "taskmaster-ai": {
+             "command": "npx",
+             "args": ["-y", "--package=task-master-ai", "task-master-ai"],
+             "env": {
+               "ANTHROPIC_API_KEY": "your_anthropic_api_key",
+               "PERPLEXITY_API_KEY": "your_perplexity_api_key",
+               "XAI_API_KEY": "your_xai_api_key"
+             },
+             "type": "stdio"
+           }
+         }
+       }
+       ```
+       - Obtain API keys from [Anthropic](https://www.anthropic.com) and [Perplexity](https://www.perplexity.ai). For XAI API, visit [xAI API](https://x.ai/api).[](https://github.com/eyaltoledano/claude-task-master)
+   - Initialize Taskmaster AI:
+     ```bash
+     task-master init
+     ```
+     - Create a PRD at `.taskmaster/docs/prd.txt` and parse it:
+       ```bash
+       task-master parse-prd .taskmaster/docs/prd.txt
+       ```
+
+2. **Integrate Claude Code**
+   - Install Claude Code in Cursor via its VS Code extension or CLI:
+     - **Link**: [Claude Code Best Practices](https://www.anthropic.com)[](https://www.anthropic.com/engineering/claude-code-best-practices)
+     - Run in your project root:
+       ```bash
+       claude -p "Analyze codebase and suggest improvements"
+       ```
+   - Enable Claude Code’s background tasks via GitHub Actions for automated bug detection (e.g., labeling new issues).[](https://www.anthropic.com/news/claude-4)
+   - Use Claude Code for intelligent code reviews and error prediction:
+     - In Cursor’s Agent Mode (`Ctrl+I`), prompt: “Review my code for potential bugs.”
+
+3. **Set Up Automated Testing with ACCELQ**
+   - Sign up for ACCELQ and configure it for your project:
+     - **Link**: [ACCELQ](https://www.accelq.com)[](https://www.accelq.com/blog/bug-tracking-tools/)
+     - Use ACCELQ’s codeless automation to set up unit, integration, and UI tests for web, mobile, or APIs.
+   - Configure webhooks in ACCELQ to notify Taskmaster AI of test failures:
+     - Create a webhook to trigger a Taskmaster AI command:
+       ```bash
+       task-master create --prompt="Fix failing test: [test description]"
+       ```
+     - This generates a bug-fix task in `/tasks/tasks.json`.
+
+4. **Configure GitHub Issues and Actions**
+   - Set up GitHub Issues for bug tracking:
+     - **Link**: [GitHub Issues](https://docs.github.com/en/issues)[](https://www.accelq.com/blog/bug-tracking-tools/)
+     - Create a GitHub Action to monitor test failures or code commits:
+       ```yaml
+       name: Bug Detection
+       on: [push]
+       jobs:
+         test:
+           runs-on: ubuntu-latest
+           steps:
+             - uses: actions/checkout@v3
+             - name: Run Tests
+               run: npm test
+             - name: Create Bug Task
+               if: failure()
+               run: |
+                 curl -X POST -H "Authorization: Bearer ${{ secrets.TASKMASTER_API_TOKEN }}" \
+                 -d '{"prompt":"Fix failing test: ${{ github.event.head_commit.message }}"}' \
+                 http://your-taskmaster-mcp-server/task-master/create
+       ```
+     - This creates a Taskmaster AI task for each test failure.
+   - Integrate Claude Code with GitHub:
+     - Install the Claude Code GitHub App to respond to issues or PRs:
+       - Run `/install-github-app` in Claude Code’s CLI.[](https://www.anthropic.com/news/claude-4)
+     - Prompt Claude Code to fix issues: “Fix GitHub issue #123.”
+
+5. **Enable Cursor Bugbot (Optional)**
+   - Enable Bugbot in Cursor’s web settings and link your GitHub account.
+   - Bugbot catches bugs missed by Claude Code (e.g., Opus 4) and creates tasks in Taskmaster AI.[](https://x.com/AFPayne/status/1934202327092908220)
+   - Access it via Cursor’s settings (no direct link; check documentation).
+
+6. **Workflow for Real-Time Bug Tracking**
+   - **Code in Cursor**: Write code using Claude Code’s suggestions in Agent Mode.
+   - **Run Tests**: ACCELQ runs automated tests on each commit or in real time.
+   - **Detect Bugs**: Test failures trigger GitHub Actions, which notify Taskmaster AI to create bug-fix tasks.
+   - **Fix Bugs**: In Cursor, prompt Claude Code: “Implement task [task_id] to fix [bug description].”
+   - **Review and Verify**: Claude Code reviews the fix, and ACCELQ re-runs tests to confirm resolution.
+   - **Update Tasks**: Mark tasks complete with:
+     ```bash
+     task-master complete --id=<task_id>
+     ```
+   - **Monitor Complexity**: Use `task-master analyze-complexity` to ensure bug fixes don’t introduce overly complex code.[](https://shipixen.com/tutorials/reduce-ai-coding-errors-with-taskmaster-ai)
+
+### Ensuring Clean, Reliable, and Scalable Code
+- **Code Quality**: Claude Code’s intelligent reviews identify typos, stale comments, or inefficient patterns.[](https://www.anthropic.com/engineering/claude-code-best-practices)
+- **Scalability**: Taskmaster AI’s dependency tracking prevents bottlenecks, ensuring modular code.[](https://www.geeky-gadgets.com/ai-coding-agents-task-coding/)
+- **Real-Time Feedback**: ACCELQ’s webhooks and GitHub Actions provide near-real-time bug detection.
+- **Clean Code**: Define coding standards in `.cursor/rules` to enforce consistency (e.g., modular functions, proper error handling).[](https://shipixen.com/tutorials/reduce-ai-coding-errors-with-taskmaster-ai)
+
+### Example Workflow
+1. You write a feature in Cursor (e.g., a payment module).
+2. ACCELQ runs unit
