@@ -1,13 +1,11 @@
-import { useEffect, useRef } from 'react'
-import { MapContainer, TileLayer, GeoJSON, Popup, LayersControl, useMap } from 'react-leaflet'
+import { useEffect } from 'react'
+import { MapContainer, TileLayer, GeoJSON, LayersControl, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { LandAppGeoJSON, LandAppFeature } from '@/data/landAppData'
-import { Info, MapPin, Leaf, Shield, AlertTriangle, CheckCircle } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 
 // Fix for default markers in react-leaflet
 import 'leaflet/dist/leaflet.css'
-import icon from 'leaflet/dist/images/marker-icon.png'
-import iconShadow from 'leaflet/dist/images/marker-shadow.png'
 
 let DefaultIcon = L.divIcon({
   html: `<div class="bg-govuk-blue w-3 h-3 rounded-full border-2 border-white shadow-lg"></div>`,
@@ -56,18 +54,6 @@ export default function LandAppMap({ data, height = '600px', className = '' }: L
     }
   }
 
-  const getConstraintIcon = (constraints: string[]) => {
-    if (constraints.some(c => c.toLowerCase().includes('archaeology'))) {
-      return <Shield className="h-4 w-4 text-amber-600" />
-    }
-    if (constraints.some(c => c.toLowerCase().includes('species') || c.toLowerCase().includes('badger'))) {
-      return <Leaf className="h-4 w-4 text-green-600" />
-    }
-    if (constraints.some(c => c.toLowerCase().includes('flood'))) {
-      return <AlertTriangle className="h-4 w-4 text-blue-600" />
-    }
-    return <Info className="h-4 w-4 text-gray-600" />
-  }
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {

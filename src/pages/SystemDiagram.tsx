@@ -3,9 +3,7 @@ import {
   Users, 
   MapPin, 
   FileText, 
-  Send, 
   CheckCircle, 
-  Eye, 
   Database, 
   Shield, 
   ArrowRight, 
@@ -13,7 +11,6 @@ import {
   Building2,
   Landmark,
   UserCheck,
-  Coins,
   TreePine,
   Info,
   X

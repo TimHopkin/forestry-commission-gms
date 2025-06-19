@@ -2,25 +2,16 @@ import { useState } from 'react'
 import { 
   Play, 
   Book, 
-  MessageCircle, 
-  Search, 
   ChevronDown, 
   ChevronRight,
   HelpCircle,
-  Clock,
-  Users,
-  CheckCircle,
   MapPin,
   FileText,
-  Calculator,
-  Database,
   X,
   Send,
   Bot,
   User,
-  Lightbulb,
-  AlertCircle,
-  Star
+  Lightbulb
 } from 'lucide-react'
 
 interface TutorialVideo {
