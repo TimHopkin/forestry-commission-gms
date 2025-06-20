@@ -11,6 +11,7 @@ export default function InfoTooltip({ content, title }: InfoTooltipProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [tooltipStyle, setTooltipStyle] = useState<React.CSSProperties>({})
   const [arrowStyle, setArrowStyle] = useState<React.CSSProperties>({})
+  const [arrowClassName, setArrowClassName] = useState('')
   const iconRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -76,9 +77,10 @@ export default function InfoTooltip({ content, title }: InfoTooltipProps) {
         height: '12px',
         backgroundColor: 'white',
         border: '1px solid #e5e7eb',
-        transform: arrowTransform,
-        className: arrowBorder
+        transform: arrowTransform
       })
+      
+      setArrowClassName(arrowBorder)
     }
   }, [isVisible])
 
@@ -89,7 +91,7 @@ export default function InfoTooltip({ content, title }: InfoTooltipProps) {
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
     >
-      <div style={arrowStyle}></div>
+      <div style={arrowStyle} className={arrowClassName}></div>
       {title && (
         <div className="font-semibold text-gray-900 mb-1 text-sm">{title}</div>
       )}
