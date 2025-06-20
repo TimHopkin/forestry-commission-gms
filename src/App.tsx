@@ -7,6 +7,8 @@ import ApplicationDetail from './pages/ApplicationDetail'
 import ApplicationsMapView from './pages/ApplicationsMapView'
 import SystemDiagram from './pages/SystemDiagram'
 import HelpGuidance from './pages/HelpGuidance'
+import LinkPreviewDemo from './pages/LinkPreviewDemo'
+import Brand from './pages/Brand'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/applications-map" element={<ApplicationsMapView />} />
         <Route path="/system-diagram" element={<SystemDiagram />} />
         <Route path="/help" element={<HelpGuidance />} />
+        <Route path="/link-preview" element={<LinkPreviewDemo />} />
+        <Route path="/brand" element={<Brand />} />
       </Routes>
     </Layout>
   )

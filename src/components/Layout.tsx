@@ -80,6 +80,7 @@ export default function Layout({ children }: LayoutProps) {
             <div>
               <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
               <ul className="space-y-2">
+                <li><Link to="/brand" className="text-gray-300 hover:text-white">Brand Guidelines</Link></li>
                 <li><a href="#" className="text-gray-300 hover:text-white">Help & Support</a></li>
                 <li><a href="#" className="text-gray-300 hover:text-white">Privacy Policy</a></li>
                 <li><a href="#" className="text-gray-300 hover:text-white">Terms of Service</a></li>

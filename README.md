@@ -203,4 +203,4 @@ This project is developed for the Forestry Commission and UK Government use.
 
 🤖 **Built with Claude Code** - AI-assisted development for government digital services.
 
-*Last updated: December 2024*
+*Last updated: June 2025*
