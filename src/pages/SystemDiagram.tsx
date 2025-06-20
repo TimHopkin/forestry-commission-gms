@@ -16,7 +16,7 @@ import {
   X,
   Network,
   Layers,
-  DollarSign,
+  PoundSterling,
   Globe,
   MonitorSpeaker,
   Coins,
@@ -548,7 +548,7 @@ export default function SystemDiagram() {
         {/* Private Sector Integration Examples */}
         <div className="mb-8">
           <h3 className="font-medium text-gray-900 mb-4 flex items-center">
-            <DollarSign className="h-5 w-5 mr-2 text-green-600" />
+            <PoundSterling className="h-5 w-5 mr-2 text-green-600" />
             Private Sector Integration Examples
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
