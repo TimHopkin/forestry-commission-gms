@@ -18,13 +18,13 @@ interface MapApplication {
   woodlandType: string
 }
 
-// Mock applications data with geographic coordinates
+// Mock applications data with geographic coordinates (matches ApplicationsList.tsx)
 const mockApplications: MapApplication[] = [
   {
     id: 'EWCO-2024-001',
     applicantName: 'John Smith',
     status: 'under-review',
-    totalGrantValue: 396800,
+    totalGrantValue: 125000,
     proposedArea: 15.5,
     county: 'Devon',
     submittedAt: new Date('2024-01-15'),
@@ -33,57 +33,156 @@ const mockApplications: MapApplication[] = [
   },
   {
     id: 'EWCO-2024-002',
-    applicantName: 'Sarah Johnson',
+    applicantName: 'Green Valley Farms Ltd',
     status: 'approved',
-    totalGrantValue: 485000,
-    proposedArea: 22.3,
-    county: 'Devon',
-    submittedAt: new Date('2024-01-10'),
-    coordinates: [50.7180, -2.3350],
+    totalGrantValue: 285000,
+    proposedArea: 32.0,
+    county: 'Yorkshire',
+    submittedAt: new Date('2024-01-12'),
+    coordinates: [53.8, -1.5],
     woodlandType: 'Mixed'
   },
   {
     id: 'EWCO-2024-003',
-    applicantName: 'Michael Brown',
-    status: 'submitted',
-    totalGrantValue: 275000,
-    proposedArea: 12.8,
+    applicantName: 'Sarah Johnson',
+    status: 'draft',
+    totalGrantValue: 95000,
+    proposedArea: 8.3,
     county: 'Cornwall',
-    submittedAt: new Date('2024-01-20'),
+    submittedAt: new Date('2024-01-10'),
     coordinates: [50.2660, -5.0520],
-    woodlandType: 'Coniferous'
+    woodlandType: 'Conifer'
   },
   {
     id: 'EWCO-2024-004',
-    applicantName: 'Emma Wilson',
-    status: 'draft',
-    totalGrantValue: 156000,
-    proposedArea: 8.2,
-    county: 'Somerset',
-    submittedAt: new Date('2024-01-18'),
-    coordinates: [51.1500, -2.9900],
+    applicantName: 'Woodland Trust',
+    status: 'rejected',
+    totalGrantValue: 0,
+    proposedArea: 75.2,
+    county: 'Sussex',
+    submittedAt: new Date('2024-01-08'),
+    coordinates: [50.9, -0.1],
     woodlandType: 'Broadleaf'
   },
   {
     id: 'EWCO-2024-005',
-    applicantName: 'David Taylor',
-    status: 'rejected',
-    totalGrantValue: 320000,
-    proposedArea: 18.5,
-    county: 'Dorset',
-    submittedAt: new Date('2024-01-05'),
-    coordinates: [50.7500, -2.1500],
-    woodlandType: 'Mixed'
+    applicantName: 'Michael Brown',
+    status: 'submitted',
+    totalGrantValue: 189000,
+    proposedArea: 22.1,
+    county: 'Gloucestershire',
+    submittedAt: new Date('2024-01-20'),
+    coordinates: [51.8, -2.2],
+    woodlandType: 'Agroforestry'
   },
   {
     id: 'EWCO-2024-006',
-    applicantName: 'Lisa Anderson',
+    applicantName: 'Emma Wilson',
+    status: 'approved',
+    totalGrantValue: 367000,
+    proposedArea: 45.3,
+    county: 'Cumbria',
+    submittedAt: new Date('2024-01-25'),
+    coordinates: [54.4, -2.8],
+    woodlandType: 'Mixed'
+  },
+  {
+    id: 'EWCO-2024-007',
+    applicantName: 'Robert Clark',
     status: 'under-review',
-    totalGrantValue: 425000,
-    proposedArea: 19.7,
-    county: 'Devon',
+    totalGrantValue: 98000,
+    proposedArea: 12.8,
+    county: 'Norfolk',
+    submittedAt: new Date('2024-02-01'),
+    coordinates: [52.6, 1.2],
+    woodlandType: 'Broadleaf'
+  },
+  {
+    id: 'EWCO-2024-008',
+    applicantName: 'Highlands Estate Ltd',
+    status: 'submitted',
+    totalGrantValue: 654000,
+    proposedArea: 87.6,
+    county: 'Northumberland',
+    submittedAt: new Date('2024-02-03'),
+    coordinates: [55.1, -2.1],
+    woodlandType: 'Conifer'
+  },
+  {
+    id: 'EWCO-2024-009',
+    applicantName: 'Lisa Thompson',
+    status: 'approved',
+    totalGrantValue: 156000,
+    proposedArea: 18.2,
+    county: 'Dorset',
+    submittedAt: new Date('2024-01-28'),
+    coordinates: [50.6, -2.4],
+    woodlandType: 'Agroforestry'
+  },
+  {
+    id: 'EWCO-2024-010',
+    applicantName: 'Greenfield Cooperative',
+    status: 'under-review',
+    totalGrantValue: 289000,
+    proposedArea: 34.7,
+    county: 'Hertfordshire',
+    submittedAt: new Date('2024-02-05'),
+    coordinates: [51.8, -0.2],
+    woodlandType: 'Mixed'
+  },
+  {
+    id: 'EWCO-2024-011',
+    applicantName: 'David Martinez',
+    status: 'rejected',
+    totalGrantValue: 0,
+    proposedArea: 9.4,
+    county: 'Shropshire',
+    submittedAt: new Date('2024-01-30'),
+    coordinates: [52.7, -2.7],
+    woodlandType: 'Broadleaf'
+  },
+  {
+    id: 'EWCO-2024-012',
+    applicantName: 'Vale Forestry Group',
+    status: 'approved',
+    totalGrantValue: 445000,
+    proposedArea: 56.1,
+    county: 'Oxfordshire',
+    submittedAt: new Date('2024-01-18'),
+    coordinates: [51.7, -1.2],
+    woodlandType: 'Broadleaf'
+  },
+  {
+    id: 'EWCO-2024-013',
+    applicantName: 'Catherine Foster',
+    status: 'submitted',
+    totalGrantValue: 67000,
+    proposedArea: 7.9,
+    county: 'Somerset',
+    submittedAt: new Date('2024-02-08'),
+    coordinates: [51.1, -2.9],
+    woodlandType: 'Broadleaf'
+  },
+  {
+    id: 'EWCO-2024-014',
+    applicantName: 'Northern Woodlands Initiative',
+    status: 'under-review',
+    totalGrantValue: 823000,
+    proposedArea: 102.3,
+    county: 'Lancashire',
+    submittedAt: new Date('2024-02-10'),
+    coordinates: [53.9, -2.5],
+    woodlandType: 'Mixed'
+  },
+  {
+    id: 'EWCO-2024-015',
+    applicantName: 'James Patterson',
+    status: 'approved',
+    totalGrantValue: 212000,
+    proposedArea: 26.5,
+    county: 'Warwickshire',
     submittedAt: new Date('2024-01-22'),
-    coordinates: [50.6980, -2.4120],
+    coordinates: [52.3, -1.5],
     woodlandType: 'Agroforestry'
   }
 ]
@@ -245,8 +344,8 @@ export default function ApplicationsMapView() {
 
         <div style={{ height: '600px' }}>
           <MapContainer
-            center={[50.7250, -2.3470]} // Centre on South West England
-            zoom={8}
+            center={[52.5, -1.5]} // Centre on England
+            zoom={6}
             style={{ height: '100%', width: '100%' }}
           >
             <LayersControl position="topright">

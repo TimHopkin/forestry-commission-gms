@@ -93,6 +93,15 @@ export default function Layout({ children }: LayoutProps) {
               </p>
             </div>
           </div>
+          
+          {/* Collaboration Footer */}
+          <div className="border-t border-gray-700 mt-8 pt-6">
+            <div className="text-center">
+              <p className="text-gray-400 text-sm">
+                A Digital Land Solutions Ltd & Forestry Commission collaboration
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

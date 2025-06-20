@@ -1,60 +1,174 @@
 graph TB
-    %% Stakeholders
-    FA[👨‍🌾 Farmers & Advisors]
-    LA[🗺️ Land App System]
-    FC[🌲 Forestry Commission GMS]
-    DEFRA[🏛️ Defra]
-    HMTREAS[💰 HM Treasury]
+    %% External Stakeholders
+    APPLICANTS[👨‍🌾 Applicants<br/>Farmers, Landowners, Consultants]
+    ASSESSORS[🔍 Site Assessors<br/>FC Field Officers]
+    POLICY[📋 Policy Teams<br/>DEFRA, FC Headquarters]
+    TREASURY[💰 Treasury<br/>Budget & Payments]
+    PUBLIC[🌍 Public<br/>Citizens, NGOs]
 
-    %% Core System Components
-    subgraph "Land App Ecosystem"
-        LAAPI[Land App API]
-        LAGEO[GeoJSON Data]
-        LAASSESS[Site Assessment Tools]
+    %% Production Infrastructure
+    subgraph "Cloud Infrastructure (AWS/Azure)"
+        ALB[Application Load Balancer]
+        WAF[Web Application Firewall]
+        CDN[CloudFront CDN]
+        
+        subgraph "Application Tier"
+            WEB1[Web Server 1]
+            WEB2[Web Server 2]
+            WEB3[Web Server 3]
+        end
+        
+        subgraph "Data Tier"
+            DBPRIMARY[(Primary Database<br/>PostgreSQL)]
+            DBREPLICA[(Read Replica)]
+            REDIS[(Redis Cache)]
+            S3[(S3 Document Store)]
+        end
+        
+        subgraph "Analytics & ML"
+            ANALYTICS[Real-time Analytics Engine]
+            ML[ML Risk Assessment]
+            BIGDATA[Data Warehouse]
+        end
     end
 
-    subgraph "Forestry Commission GMS"
-        DASH[Dashboard]
-        APPLIST[Applications List]
-        APPDETAIL[Application Detail]
-        MAPVIEW[Map View]
-        SYSDIAG[System Diagram]
-        HELP[Help & Guidance]
-        AIASSIST[AI Assistant]
+    %% Core Application Components
+    subgraph "EWCO Grant Management System"
+        subgraph "Public Portal"
+            LANDING[Landing Page]
+            APPLY[Application Portal]
+            TRACKER[Application Tracker]
+            DOCS[Document Upload]
+            STATUS[Status Updates]
+        end
+        
+        subgraph "Staff Dashboard"
+            DASH[Analytics Dashboard]
+            WORKFLOW[Workflow Management]
+            ASSESSMENT[Assessment Tools]
+            APPROVAL[Approval Workflow]
+            REPORTING[Advanced Reporting]
+        end
+        
+        subgraph "GIS & Mapping"
+            MAPVIEW[Interactive Map View]
+            SPATIAL[Spatial Analysis]
+            CONSTRAINTS[Constraints Checking]
+            IMPACT[Environmental Impact]
+        end
+        
+        subgraph "Payment System"
+            CALCULATOR[Payment Calculator]
+            SCHEDULE[Payment Scheduling]
+            RECONCILE[Financial Reconciliation]
+            MONITORING[Compliance Monitoring]
+        end
     end
 
+    %% Integration Layer
     subgraph "Government Integration"
-        DEFRAAPI[Defra Data Hub]
+        VERIFY[Identity Verification<br/>Gov.UK Verify]
+        NOTIFY[Notifications<br/>Gov.UK Notify]
+        PAY[Payments<br/>Gov.UK Pay]
+        DEFRAAPI[DEFRA Data APIs]
         OSCAR[Treasury OSCAR]
-        AUDIT[Audit Trail System]
+        ORDNANCE[Ordnance Survey APIs]
+        ENVIRONMENT[Environment Agency APIs]
     end
 
-    %% Data Flow
-    FA --> LAASSESS
-    LAASSESS --> LAGEO
-    LAGEO --> LAAPI
-    LAAPI --> FC
+    %% External Data Sources
+    subgraph "Data Sources"
+        LANDAPP[Digital Land Solutions<br/>Land App Platform]
+        SATELLITE[Satellite Imagery<br/>Copernicus/Planet]
+        WEATHER[Weather Data<br/>Met Office]
+        CARBON[Carbon Databases<br/>FC Research]
+        HERITAGE[Historic England<br/>Heritage Data]
+    end
+
+    %% Security & Compliance
+    subgraph "Security Layer"
+        IAM[Identity & Access Management]
+        ENCRYPTION[End-to-End Encryption]
+        BACKUP[Automated Backups]
+        MONITOR[24/7 Monitoring]
+        LOGS[Audit Logging]
+    end
+
+    %% User Interactions
+    APPLICANTS --> LANDING
+    APPLICANTS --> APPLY
+    APPLICANTS --> TRACKER
+    APPLICANTS --> DOCS
     
-    FC --> DASH
-    FC --> APPLIST
-    FC --> APPDETAIL
-    FC --> MAPVIEW
-    FC --> SYSDIAG
-    FC --> HELP
-    HELP --> AIASSIST
+    ASSESSORS --> WORKFLOW
+    ASSESSORS --> ASSESSMENT
+    ASSESSORS --> MAPVIEW
     
-    FC --> DEFRAAPI
-    FC --> OSCAR
-    FC --> AUDIT
+    POLICY --> DASH
+    POLICY --> REPORTING
+    POLICY --> ANALYTICS
     
-    DEFRAAPI --> DEFRA
-    OSCAR --> HMTREAS
+    PUBLIC --> STATUS
+    PUBLIC --> LANDING
+
+    %% System Flows
+    APPLY --> WORKFLOW
+    DOCS --> S3
+    ASSESSMENT --> APPROVAL
+    APPROVAL --> SCHEDULE
+    SCHEDULE --> PAY
+    
+    MAPVIEW --> SPATIAL
+    SPATIAL --> CONSTRAINTS
+    CONSTRAINTS --> IMPACT
+    
+    %% External Integrations
+    VERIFY --> APPLY
+    NOTIFY --> STATUS
+    PAY --> TREASURY
+    DEFRAAPI --> POLICY
+    OSCAR --> TREASURY
+    
+    LANDAPP --> SPATIAL
+    SATELLITE --> IMPACT
+    WEATHER --> ASSESSMENT
+    CARBON --> CALCULATOR
+    HERITAGE --> CONSTRAINTS
+    ORDNANCE --> MAPVIEW
+    ENVIRONMENT --> CONSTRAINTS
+
+    %% Infrastructure Flows
+    ALB --> WEB1
+    ALB --> WEB2
+    ALB --> WEB3
+    WAF --> ALB
+    CDN --> WAF
+    
+    WEB1 --> DBPRIMARY
+    WEB2 --> DBREPLICA
+    WEB3 --> REDIS
+    
+    ANALYTICS --> BIGDATA
+    ML --> ASSESSMENT
+    
+    %% Security Flows
+    IAM --> VERIFY
+    ENCRYPTION --> DBPRIMARY
+    BACKUP --> S3
+    MONITOR --> LOGS
+    LOGS --> AUDIT
 
     %% Styling
-    classDef stakeholder fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef system fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef integration fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef stakeholder fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
+    classDef infrastructure fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef application fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef integration fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef security fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef data fill:#fff8e1,stroke:#fbc02d,stroke-width:2px
     
-    class FA,DEFRA,HMTREAS stakeholder
-    class LA,FC system
-    class DEFRAAPI,OSCAR,AUDIT integration
+    class APPLICANTS,ASSESSORS,POLICY,TREASURY,PUBLIC stakeholder
+    class ALB,WAF,CDN,WEB1,WEB2,WEB3,DBPRIMARY,DBREPLICA,REDIS,S3,ANALYTICS,ML,BIGDATA infrastructure
+    class LANDING,APPLY,TRACKER,DOCS,STATUS,DASH,WORKFLOW,ASSESSMENT,APPROVAL,REPORTING,MAPVIEW,SPATIAL,CONSTRAINTS,IMPACT,CALCULATOR,SCHEDULE,RECONCILE,MONITORING application
+    class VERIFY,NOTIFY,PAY,DEFRAAPI,OSCAR,ORDNANCE,ENVIRONMENT integration
+    class IAM,ENCRYPTION,BACKUP,MONITOR,LOGS security
+    class LANDAPP,SATELLITE,WEATHER,CARBON,HERITAGE data
