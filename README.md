@@ -140,6 +140,8 @@ Built to meet government standards:
 - **Accessibility**: GOV.UK Design System compliance
 - **Audit Trail**: Complete transaction logging for transparency
 - **Data Integration**: Defra and HM Treasury reporting capabilities
+- **Language Standards**: British English throughout the application
+- **Currency Standards**: All monetary values displayed in Pounds Sterling (£)
 
 ## 🎯 User Workflows
 

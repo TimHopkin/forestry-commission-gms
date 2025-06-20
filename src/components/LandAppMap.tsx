@@ -200,7 +200,7 @@ export default function LandAppMap({ data, height = '600px', className = '' }: L
   return (
     <div className={`relative ${className}`} style={{ height }}>
       <MapContainer
-        center={[50.7250, -2.3470]} // Center on Devon area
+        center={[50.7250, -2.3470]} // Centre on Devon area
         zoom={14}
         style={{ height: '100%', width: '100%' }}
         className="rounded-lg overflow-hidden"

@@ -11,7 +11,12 @@ import {
   Send,
   Bot,
   User,
-  Lightbulb
+  Lightbulb,
+  Database,
+  Layers,
+  Coins,
+  Globe,
+  Network
 } from 'lucide-react'
 
 interface TutorialVideo {
@@ -69,6 +74,42 @@ const tutorialVideos: TutorialVideo[] = [
     difficulty: 'Beginner'
   },
   {
+    id: 'database-architecture',
+    title: 'Understanding the Blended Finance Database Architecture',
+    duration: '14:25',
+    description: 'How the database is evolving to support blended finance, data flows, and integration points.',
+    thumbnail: '/api/placeholder/320/180',
+    category: 'Database & Data Management',
+    difficulty: 'Intermediate'
+  },
+  {
+    id: 'data-baselines',
+    title: 'Working with Environmental Baselines & UKHab Data',
+    duration: '11:40',
+    description: 'Understanding baseline data sources, UKHab classifications, and environmental assessments.',
+    thumbnail: '/api/placeholder/320/180',
+    category: 'Database & Data Management',
+    difficulty: 'Intermediate'
+  },
+  {
+    id: 'spatial-incentives',
+    title: 'Managing Spatial Incentives & Private Sector Opportunities',
+    duration: '16:15',
+    description: 'How to configure and manage spatially-targeted incentives for blended finance opportunities.',
+    thumbnail: '/api/placeholder/320/180',
+    category: 'Database & Data Management',
+    difficulty: 'Advanced'
+  },
+  {
+    id: 'data-integration',
+    title: 'Data Integration: APIs, External Systems, and Quality Assurance',
+    duration: '13:50',
+    description: 'Managing data integration with Land Registry, OS MasterMap, and other external data sources.',
+    thumbnail: '/api/placeholder/320/180',
+    category: 'Database & Data Management',
+    difficulty: 'Advanced'
+  },
+  {
     id: 'compliance-reporting',
     title: 'Compliance Reporting & Data Export',
     duration: '18:30',
@@ -90,8 +131,8 @@ const tutorialVideos: TutorialVideo[] = [
 
 const faqs = [
   {
-    question: 'How do I prioritize applications for review?',
-    answer: 'Applications are automatically prioritized based on fast-track eligibility, submission date, and grant value. Fast-track eligible applications appear at the top of your queue with a blue badge. You can also use filters to focus on specific criteria.'
+    question: 'How do I prioritise applications for review?',
+    answer: 'Applications are automatically prioritised based on fast-track eligibility, submission date, and grant value. Fast-track eligible applications appear at the top of your queue with a blue badge. You can also use filters to focus on specific criteria.'
   },
   {
     question: 'What should I do if Land App data seems incorrect?',
@@ -104,6 +145,22 @@ const faqs = [
   {
     question: 'When should I schedule a site visit?',
     answer: 'Site visits are recommended for applications over £100,000, those in environmentally sensitive areas, or when remote assessment is insufficient. The system will suggest site visits based on application criteria.'
+  },
+  {
+    question: 'What is blended finance and how does it work?',
+    answer: 'Blended finance combines public and private funding for land use projects. The government pays land managers for income foregone, while private companies pay for specific ecosystem services they value - like water companies funding natural flood management or developers funding biodiversity net gain.'
+  },
+  {
+    question: 'How do UKHab baselines improve application processing?',
+    answer: 'UKHab baselines provide standardized habitat data derived from Ordnance Survey MasterMap, giving accurate environmental starting points for every land parcel. This reduces assessment time and improves consistency in environmental impact calculations.'
+  },
+  {
+    question: 'What types of private sector opportunities are available?',
+    answer: 'Private sector opportunities include: water companies paying for flood management, food retailers investing in soil health, property developers funding biodiversity net gain, and energy companies purchasing carbon sequestration. Each has specific requirements and payment structures.'
+  },
+  {
+    question: 'How is data integration with external systems managed?',
+    answer: 'The system integrates with Land Registry, OS MasterMap, and earth observation APIs. Integration status is monitored continuously, with automated quality checks and error handling. Regular synchronization ensures data freshness while maintaining audit trails.'
   },
   {
     question: 'How do I export data for Defra reporting?',
@@ -171,6 +228,33 @@ The map shows suitability levels: Green (High), Yellow (Medium), Red (Low). Need
 4. **Rates**: Current rates are automatically applied
 
 The calculator helps verify Land App calculations. Any specific payment questions?`
+    } else if (aiInput.toLowerCase().includes('database') || aiInput.toLowerCase().includes('blended finance')) {
+      aiResponse = `🗄️ For database and blended finance features:
+
+1. **System Architecture**: Visit System Diagram → Database Architecture section for overview
+2. **Blended Finance**: Combines public + private funding for environmental projects
+3. **Data Management**: UKHab baselines, spatial incentives, contract management
+4. **Integration**: APIs for Land Registry, OS MasterMap, earth observation
+
+Need help with specific database functionality?`
+    } else if (aiInput.toLowerCase().includes('baseline') || aiInput.toLowerCase().includes('ukhab')) {
+      aiResponse = `🌍 For environmental baselines and UKHab data:
+
+1. **UKHab Data**: Standardized habitat classifications from OS MasterMap
+2. **Baselines**: Soil carbon, biodiversity indices, flood risk assessments
+3. **Quality Checks**: Confidence scores and data validation indicators
+4. **Updates**: Regular synchronization with authoritative data sources
+
+What specific baseline information do you need help with?`
+    } else if (aiInput.toLowerCase().includes('spatial') || aiInput.toLowerCase().includes('incentive')) {
+      aiResponse = `📍 For spatial incentives and private sector opportunities:
+
+1. **Geographic Targeting**: Define areas with specific incentive rates
+2. **Private Sector Matching**: Water companies, developers, food retailers, energy companies
+3. **Service Types**: Flood management, biodiversity net gain, soil health, carbon sequestration
+4. **Configuration**: Eligibility criteria, payment rates, contract terms
+
+Which type of spatial incentive are you working with?`
     }
 
     const assistantMessage: AIMessage = {
@@ -363,6 +447,136 @@ The calculator helps verify Land App calculations. Any specific payment question
                   <span>Verify constraints and environmental considerations</span>
                 </li>
               </ol>
+            </div>
+          </div>
+
+          {/* Database Management Guides */}
+          <div className="mt-8">
+            <h3 className="text-lg font-medium text-gray-900 mb-6 flex items-center">
+              <Database className="h-5 w-5 mr-2 text-blue-600" />
+              Database & Data Management Guides
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Environmental Baselines Guide */}
+              <div className="border border-gray-200 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-3 flex items-center">
+                  <Layers className="h-5 w-5 mr-2 text-blue-600" />
+                  Managing Environmental Baselines
+                </h4>
+                <ol className="space-y-2 text-sm">
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">1</span>
+                    <span>Access baseline data through the System Diagram → Database Architecture section</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">2</span>
+                    <span>Review UKHab habitat classifications derived from OS MasterMap data</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">3</span>
+                    <span>Validate soil carbon, biodiversity indices, and flood risk assessments</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">4</span>
+                    <span>Check confidence scores and data quality indicators</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">5</span>
+                    <span>Update baseline data when new sources become available</span>
+                  </li>
+                </ol>
+              </div>
+
+              {/* Blended Finance Setup Guide */}
+              <div className="border border-gray-200 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-3 flex items-center">
+                  <Coins className="h-5 w-5 mr-2 text-amber-600" />
+                  Setting Up Blended Finance Contracts
+                </h4>
+                <ol className="space-y-2 text-sm">
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-amber-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">1</span>
+                    <span>Identify eligible applications for blended finance opportunities</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-amber-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">2</span>
+                    <span>Match ecosystem services with interested private sector buyers</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-amber-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">3</span>
+                    <span>Configure payment schedules for both public and private contributions</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-amber-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">4</span>
+                    <span>Set up monitoring and verification requirements for service delivery</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-amber-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">5</span>
+                    <span>Generate contracts and coordinate digital signatures</span>
+                  </li>
+                </ol>
+              </div>
+
+              {/* Spatial Incentives Guide */}
+              <div className="border border-gray-200 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-3 flex items-center">
+                  <Globe className="h-5 w-5 mr-2 text-purple-600" />
+                  Managing Spatial Incentives
+                </h4>
+                <ol className="space-y-2 text-sm">
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">1</span>
+                    <span>Access spatial incentive mapping tools in the database management section</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">2</span>
+                    <span>Define geographic areas with specific incentive rates</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">3</span>
+                    <span>Set eligibility criteria and minimum/maximum area requirements</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">4</span>
+                    <span>Configure private sector opportunity matching algorithms</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">5</span>
+                    <span>Monitor uptake and adjust incentive structures as needed</span>
+                  </li>
+                </ol>
+              </div>
+
+              {/* Data Integration Guide */}
+              <div className="border border-gray-200 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-3 flex items-center">
+                  <Network className="h-5 w-5 mr-2 text-gray-600" />
+                  External Data Integration
+                </h4>
+                <ol className="space-y-2 text-sm">
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-gray-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">1</span>
+                    <span>Monitor integration status with Land Registry and OS MasterMap APIs</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-gray-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">2</span>
+                    <span>Validate data quality and handle integration errors</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-gray-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">3</span>
+                    <span>Schedule regular data synchronization and updates</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-gray-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">4</span>
+                    <span>Configure earth observation data feeds for monitoring</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="flex-shrink-0 w-6 h-6 bg-gray-600 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-0.5">5</span>
+                    <span>Review audit logs and maintain data integrity standards</span>
+                  </li>
+                </ol>
+              </div>
             </div>
           </div>
         </div>

@@ -245,7 +245,7 @@ export default function ApplicationsMapView() {
 
         <div style={{ height: '600px' }}>
           <MapContainer
-            center={[50.7250, -2.3470]} // Center on South West England
+            center={[50.7250, -2.3470]} // Centre on South West England
             zoom={8}
             style={{ height: '100%', width: '100%' }}
           >
