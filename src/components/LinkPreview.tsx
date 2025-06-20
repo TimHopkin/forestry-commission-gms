@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExternalLink, TreePine, MapPin, TrendingUp, Shield, Users } from 'lucide-react';
+import ShareButton from './ShareButton';
 
 interface LinkPreviewProps {
   className?: string;
@@ -10,7 +11,7 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({
   className = '', 
   variant = 'default' 
 }) => {
-  const baseUrl = window.location.origin;
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://forestrycommissiongms.netlify.app';
   
   const stats = [
     { label: 'Grants Processed', value: '2,847', icon: TrendingUp },
@@ -187,10 +188,13 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({
           
           <div className="flex items-center gap-3">
             <span className="text-sm text-gray-500 font-mono">{baseUrl}</span>
-            <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-              <span>Open GMS</span>
-              <ExternalLink className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                <span>Open GMS</span>
+                <ExternalLink className="w-4 h-4" />
+              </button>
+              <ShareButton />
+            </div>
           </div>
         </div>
       </div>

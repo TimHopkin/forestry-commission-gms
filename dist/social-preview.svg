@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:0.95" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#backgroundGradient)"/>
+  
+  <!-- Decorative Elements -->
+  <circle cx="1000" cy="100" r="80" fill="white" opacity="0.1"/>
+  <circle cx="200" cy="500" r="120" fill="white" opacity="0.05"/>
+  
+  <!-- Main Content Card -->
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="url(#cardGradient)" stroke="white" stroke-width="2" opacity="0.98"/>
+  
+  <!-- Logo and Branding -->
+  <g transform="translate(120, 120)">
+    <!-- Logo Background -->
+    <rect width="80" height="80" fill="#1e40af" rx="16"/>
+    <!-- Tree Icon -->
+    <g transform="translate(16, 16)">
+      <path d="M20 20v.2A6 6 0 0 1 17.8 32v0H10v0h0a6 6 0 0 1-2-11.6V20a6 6 0 0 1 12 0Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M14 32v12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M26 38v6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 38h16.6a2 2 0 0 0 1.4-3.4L36 28h.6a2 2 0 0 0 1.4-3.4L32 18h.4a2 2 0 0 0 1.6-3.4L26 6l-2.8 3" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+  
+  <!-- Main Title -->
+  <text x="240" y="160" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="700" fill="#1e40af">
+    Forestry Commission
+  </text>
+  <text x="240" y="200" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="600" fill="#16a34a">
+    Grant Management System
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="240" y="250" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="400" fill="#374151">
+    Digital Land Solutions
+  </text>
+  
+  <!-- Description -->
+  <text x="240" y="290" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#6b7280">
+    Transforming England's woodland creation through intelligent
+  </text>
+  <text x="240" y="315" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="400" fill="#6b7280">
+    grant management and streamlined government processes
+  </text>
+  
+  <!-- Statistics -->
+  <g transform="translate(240, 360)">
+    <!-- Stats Background -->
+    <rect width="650" height="120" rx="16" fill="white" opacity="0.8" stroke="#e5e7eb" stroke-width="1"/>
+    
+    <!-- Stat 1 -->
+    <g transform="translate(40, 30)">
+      <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#1e40af">2,847</text>
+      <text x="0" y="25" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="500" fill="#6b7280">Grants Processed</text>
+    </g>
+    
+    <!-- Stat 2 -->
+    <g transform="translate(240, 30)">
+      <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16a34a">45,230</text>
+      <text x="0" y="25" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="500" fill="#6b7280">Hectares Protected</text>
+    </g>
+    
+    <!-- Stat 3 -->
+    <g transform="translate(480, 30)">
+      <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#dc2626">156</text>
+      <text x="0" y="25" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="500" fill="#6b7280">Applications Active</text>
+    </g>
+  </g>
+  
+  <!-- GOV.UK Badge -->
+  <g transform="translate(950, 120)">
+    <rect width="120" height="40" rx="20" fill="white" opacity="0.9" stroke="#1e40af" stroke-width="2"/>
+    <text x="60" y="28" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="#1e40af" text-anchor="middle">GOV.UK</text>
+  </g>
+  
+  <!-- Website URL -->
+  <text x="240" y="530" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="500" fill="#374151">
+    forestrycommissiongms.netlify.app
+  </text>
+  
+  <!-- System Status -->
+  <g transform="translate(800, 505)">
+    <circle cx="8" cy="8" r="6" fill="#16a34a"/>
+    <text x="24" y="14" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="500" fill="#374151">System Operational</text>
+  </g>
+</svg>
