@@ -1,0 +1,11 @@
+/favicon-simple.ico
+  Cache-Control: public, max-age=31536000
+
+/favicon-16x16.png
+  Cache-Control: public, max-age=31536000
+
+/favicon-32x32.png
+  Cache-Control: public, max-age=31536000
+
+/forestry-icon.svg
+  Cache-Control: public, max-age=31536000
